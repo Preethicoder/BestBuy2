@@ -61,14 +61,7 @@ class NonStockedProduct(Product):
 
 
     def __init__(self, name, price):
-
-        if not name:
-            raise ValueError("Name cannot be empty.")
-        if price < 0:
-            raise ValueError("Price cannot be less than zero ")
-        self.name = name
-        self.price = price
-        self.active = True
+         super().__init__(name,price,quantity = 0)
 
 
     def show(self):
@@ -83,19 +76,10 @@ class LimitedProduct(Product):
 
 
     def __init__(self, name, price, quantity,maximum):
-
-        if not name:
-            raise ValueError("Name cannot be empty.")
-        if price < 0:
-            raise ValueError("Price cannot be less than zero ")
-        if quantity < 0:
-            raise ValueError("Quantity cannot be negative.")
-
-        self.name = name
-        self.price = price
-        self.quantity = quantity
-        self.maximum = maximum
-        self.active = True
+          super().__init__(name,price,quantity)
+          if maximum < 0:
+              raise ValueError ("Maximum quantity cannot be zero")
+          self.maximum = maximum
 
     def show(self):
         """MacBook Air M2, Price: 1450, Quantity: 100"""
