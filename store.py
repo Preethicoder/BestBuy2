@@ -11,6 +11,9 @@ class Store:
         """Adds a new product to the store."""
         self.product.append(product)
 
+    def __contains__(self, item):
+        return item in self.product
+
     def remove_product(self, product):
         """Removes a product from store."""
         self.product.remove(product)
@@ -21,7 +24,7 @@ class Store:
 
     def get_all_products(self):
         """Returns all products in the store that are active."""
-        return [product_item for product_item in self.product if product_item.is_active()]
+        return [product_item for product_item in self.product if product_item.is_active]
 
     def order(self, shopping_list):
         total_price = 0

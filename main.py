@@ -16,9 +16,9 @@ third_one_free = promotion.ThirdOneFree("Third One Free!")
 thirty_percent = promotion.PercentDiscount("30% off!", percent=30)
 
 # Add promotions to products
-product_list[0].set_promotion(second_half_price)
-product_list[1].set_promotion(third_one_free)
-product_list[3].set_promotion(thirty_percent)
+product_list[0].promotion =second_half_price
+product_list[1].promotion = third_one_free
+product_list[3].promotion = thirty_percent
 # Initialize the store with the product list
 best_buy = store.Store(product_list)
 
@@ -28,7 +28,7 @@ def show_products(store):
     print("-------------------------")
     for index,product in enumerate(products,1):
        print(f"{index}.",end="")
-       product.show()
+       print(str(product))
     print("---------------------")
 
 def make_order(store):

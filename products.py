@@ -9,49 +9,79 @@ class Product:
         if quantity < 0:
             raise ValueError("Quantity cannot be negative.")
 
-        self.name = name
-        self.price = price
-        self.quantity = quantity
-        self.active = True
-        self.promotion = None
+        self._name = name
+        self._price = price
+        self._quantity = quantity
+        self._active = True
+        self._promotion = None
 
-    def set_promotion(self,promotion):
-        self.promotion = promotion
+    @property
+    def name(self):
+        return self._name
 
-    def get_quantity(self):
-        """Getter function for quantity."""
-        return self.quantity
+    @name.setter
+    def name(self,name):
+        if not name:
+            raise ValueError("Name cannot be empty.")
+        self._name = name
 
-    def set_quantity(self, quantity):
-        """Sets the quantity and deactivates the product if quantity reaches 0."""
-        if quantity < 0:
-            raise  ValueError("Quantity should not  be zero")
+    @property
+    def price(self):
+        return self._price
 
-        self.quantity = self.quantity - quantity
+    @price.setter
+    def price(self, value):
+        if value < 0:
+            raise ValueError("Price cannot be less than zero")
+        self._price = value
 
-        if quantity == 0:
-           self.deactivate()
+    # Getter and Setter for quantity
+    @property
+    def quantity(self):
+        return self._quantity
 
+    @quantity.setter
+    def quantity(self, value):
+        if value < 0:
+            raise ValueError("Quantity cannot be negative.")
+        self._quantity = self._quantity - value
+        if value == 0:
+            self.deactivate()
+
+    # Getter and Setter for promotion
+    @property
+    def promotion(self):
+        return self._promotion
+
+    @promotion.setter
+    def promotion(self, value):
+        self._promotion = value
+
+    # Active status
+    @property
     def is_active(self):
-        """Getter function for active."""
-        if self.active:
-            return True
-        return False
+        return self._active
+
+
+
+
+
+
 
     def activate(self):
         """Activates the product."""
-        self.active = True
+        self._active = True
 
     def deactivate(self):
         """Deactivates the product."""
-        self.active = False
+        self._active = False
 
-    def show(self):
+    def __str__(self):
         """MacBook Air M2, Price: 1450, Quantity: 100"""
         detail = f"{self.name}, Price={self.price}, Quantity={self.quantity}"
         if self.promotion:
             detail += f", Promotion={self.promotion.name}"
-        print(detail)
+        return detail
 
     def buy(self,quantity):
         if quantity < 0:
@@ -62,7 +92,7 @@ class Product:
             total_price = self.promotion.apply_promotion(self,quantity)
         else :
             total_price = quantity * self.price
-        self.set_quantity(quantity)
+        self.quantity = quantity
 
         return total_price
 
@@ -73,12 +103,12 @@ class NonStockedProduct(Product):
          super().__init__(name,price,quantity = 0)
 
 
-    def show(self):
+    def __str__(self):
 
         detail = f"{self.name}, Price={self.price}"
         if self.promotion:
             detail += f", Promotion={self.promotion.name}"
-        print(detail)
+        return detail
 
 
 
@@ -91,12 +121,12 @@ class LimitedProduct(Product):
               raise ValueError ("Maximum quantity cannot be zero")
           self.maximum = maximum
 
-    def show(self):
+    def __str__(self):
         """MacBook Air M2, Price: 1450, Quantity: 100"""
         detail =f"{self.name}, Price={self.price}, Quantity={self.quantity}, Maximum={self.maximum}"
         if self.promotion:
             detail += f", Promotion={self.promotion.name}"
-        print(detail)
+        return detail
 
 def main():
     bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
@@ -104,13 +134,13 @@ def main():
 
     print(bose.buy(50))
     print(mac.buy(100))
-    print(mac.is_active())
+    print(mac._active)
 
-    bose.show()
-    mac.show()
+    print(str(bose))
+    str(mac)
 
-    bose.set_quantity(1000)
-    bose.show()
+    bose.quantity =1000
+    str(bose)
 
 if __name__ == "__main__":
     main()
