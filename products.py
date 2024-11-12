@@ -13,6 +13,10 @@ class Product:
         self.price = price
         self.quantity = quantity
         self.active = True
+        self.promotion = None
+
+    def set_promotion(self,promotion):
+        self.promotion = promotion
 
     def get_quantity(self):
         """Getter function for quantity."""
@@ -23,7 +27,7 @@ class Product:
         if quantity < 0:
             raise  ValueError("Quantity should not  be zero")
 
-        self.quantity = quantity
+        self.quantity = self.quantity - quantity
 
         if quantity == 0:
            self.deactivate()
@@ -44,16 +48,21 @@ class Product:
 
     def show(self):
         """MacBook Air M2, Price: 1450, Quantity: 100"""
-        print(f"{self.name}, Price={self.price}, Quantity={self.quantity}")
+        detail = f"{self.name}, Price={self.price}, Quantity={self.quantity}"
+        if self.promotion:
+            detail += f", Promotion={self.promotion.name}"
+        print(detail)
 
     def buy(self,quantity):
         if quantity < 0:
             raise ValueError("Quantity cannot be zero")
         if quantity > self.quantity:
             raise ValueError("More quantity than available")
-
-        total_price = quantity * self.price
-        self.quantity = self.quantity - quantity
+        if self.promotion:
+            total_price = self.promotion.apply_promotion(self,quantity)
+        else :
+            total_price = quantity * self.price
+        self.set_quantity(quantity)
 
         return total_price
 
@@ -65,10 +74,11 @@ class NonStockedProduct(Product):
 
 
     def show(self):
-        """MacBook Air M2, Price: 1450, Quantity: 100"""
-        print(f"{self.name}, Price={self.price}")
 
-
+        detail = f"{self.name}, Price={self.price}"
+        if self.promotion:
+            detail += f", Promotion={self.promotion.name}"
+        print(detail)
 
 
 
@@ -83,8 +93,10 @@ class LimitedProduct(Product):
 
     def show(self):
         """MacBook Air M2, Price: 1450, Quantity: 100"""
-        print(f"{self.name}, Price={self.price}, Quantity={self.quantity}, Maximum={self.maximum}")
-
+        detail =f"{self.name}, Price={self.price}, Quantity={self.quantity}, Maximum={self.maximum}"
+        if self.promotion:
+            detail += f", Promotion={self.promotion.name}"
+        print(detail)
 
 def main():
     bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)

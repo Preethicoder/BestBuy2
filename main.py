@@ -1,5 +1,6 @@
 import store
 import products
+import promotion
 
 # Setup initial stock of inventory
 # setup initial stock of inventory
@@ -9,8 +10,15 @@ product_list = [ products.Product("MacBook Air M2", price=1450, quantity=100),
                  products.NonStockedProduct("Windows License", price=125),
                  products.LimitedProduct("Shipping", price=10, quantity=250, maximum=1)
                ]
+# Create promotion catalog
+second_half_price = promotion.SecondHalfPrice("Second Half price!")
+third_one_free = promotion.ThirdOneFree("Third One Free!")
+thirty_percent = promotion.PercentDiscount("30% off!", percent=30)
 
-
+# Add promotions to products
+product_list[0].set_promotion(second_half_price)
+product_list[1].set_promotion(third_one_free)
+product_list[3].set_promotion(thirty_percent)
 # Initialize the store with the product list
 best_buy = store.Store(product_list)
 
@@ -33,11 +41,15 @@ def make_order(store):
         product_nos = input("Which product # do you want?")
         quantity = input("What amount do you want?")
         if product_nos == "" and quantity == "":
-           break
-        if  int(product_nos) >=1 and int(product_nos) <=3:
+            break
+        if int(product_nos) >= 1 and int(product_nos) <= 3:
             print("Product added to list!")
-        else :
+            ordered_list.append((product_list[int(product_nos) - 1], int(quantity)))
+        else:
             print("Error adding product")
+    total_price = store.order(ordered_list)
+    print("*****************")
+    print(f"Order made! Total payment:${total_price} ")
 
 
 def start(store):
