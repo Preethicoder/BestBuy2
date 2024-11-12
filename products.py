@@ -57,6 +57,50 @@ class Product:
 
         return total_price
 
+class NonStockedProduct(Product):
+
+
+    def __init__(self, name, price):
+
+        if not name:
+            raise ValueError("Name cannot be empty.")
+        if price < 0:
+            raise ValueError("Price cannot be less than zero ")
+        self.name = name
+        self.price = price
+        self.active = True
+
+
+    def show(self):
+        """MacBook Air M2, Price: 1450, Quantity: 100"""
+        print(f"{self.name}, Price={self.price}")
+
+
+
+
+
+class LimitedProduct(Product):
+
+
+    def __init__(self, name, price, quantity,maximum):
+
+        if not name:
+            raise ValueError("Name cannot be empty.")
+        if price < 0:
+            raise ValueError("Price cannot be less than zero ")
+        if quantity < 0:
+            raise ValueError("Quantity cannot be negative.")
+
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+        self.maximum = maximum
+        self.active = True
+
+    def show(self):
+        """MacBook Air M2, Price: 1450, Quantity: 100"""
+        print(f"{self.name}, Price={self.price}, Quantity={self.quantity}, Maximum={self.maximum}")
+
 
 def main():
     bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
