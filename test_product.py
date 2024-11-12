@@ -8,6 +8,7 @@ def test_valid_initialization():
     assert product.price == 1000
     assert product.quantity == 10
     assert product.active == True
+    assert product.promotion == None
 
 # Test that creating a product with invalid details (empty name, negative price, etc.) raises an exception
 def test_create_product_with_invalid_details():
@@ -23,10 +24,11 @@ def test_zero_price_and_quantity_are_valid():
     assert product.price == 0
     assert product.quantity == 0
     assert product.active is True
+    assert product.promotion == None
 
 def test_product_becomes_inactive_when_quantity_is_zero():
     product = Product("Laptop",12,34)
-    product.set_quantity(0)
+    product.quantity =0
     assert product.active == False
 
 def test_product_purchase_modifies_quantity_and_returns_correct_output():
@@ -44,8 +46,8 @@ def test_purchase_larger_quantity_than_exists_raises_exception():
 # Test that setting a negative quantity raises an exception
 def test_set_negative_quantity_raises_exception():
     product = Product("Laptop", 12, 34)
-    with pytest.raises(ValueError,match="Quantity should not  be zero"):
-        product.set_quantity(-2)
+    with pytest.raises(ValueError,match="Quantity cannot be negative."):
+        product.quantity = -2
 
 # Test that buying with negative quantity
 def test_purchase_negative_quantity():

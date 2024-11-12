@@ -12,8 +12,8 @@ class Product:
         self._name = name
         self._price = price
         self._quantity = quantity
-        self._active = True
-        self._promotion = None
+        self.active = True
+        self.promotion = None
 
     @property
     def name(self):
@@ -60,7 +60,7 @@ class Product:
     # Active status
     @property
     def is_active(self):
-        return self._active
+        return self.active
 
 
 
@@ -70,11 +70,12 @@ class Product:
 
     def activate(self):
         """Activates the product."""
-        self._active = True
+        self.active = True
 
     def deactivate(self):
         """Deactivates the product."""
-        self._active = False
+        print("deactivate")
+        self.active = False
 
     def __str__(self):
         """MacBook Air M2, Price: 1450, Quantity: 100"""
@@ -134,7 +135,7 @@ def main():
 
     print(bose.buy(50))
     print(mac.buy(100))
-    print(mac._active)
+    print(mac.active)
 
     print(str(bose))
     str(mac)
