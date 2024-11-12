@@ -20,7 +20,7 @@ class Product:
         return self._name
 
     @name.setter
-    def name(self,name):
+    def name(self, name):
         if not name:
             raise ValueError("Name cannot be empty.")
         self._name = name
@@ -62,12 +62,6 @@ class Product:
     def is_active(self):
         return self.active
 
-
-
-
-
-
-
     def activate(self):
         """Activates the product."""
         self.active = True
@@ -84,50 +78,47 @@ class Product:
             detail += f", Promotion={self.promotion.name}"
         return detail
 
-    def buy(self,quantity):
+    def buy(self, quantity):
         if quantity < 0:
             raise ValueError("Quantity cannot be zero")
         if quantity > self.quantity:
             raise ValueError("More quantity than available")
         if self.promotion:
-            total_price = self.promotion.apply_promotion(self,quantity)
-        else :
+            total_price = self.promotion.apply_promotion(self, quantity)
+        else:
             total_price = quantity * self.price
         self.quantity = quantity
 
         return total_price
 
+
 class NonStockedProduct(Product):
 
-
     def __init__(self, name, price):
-         super().__init__(name,price,quantity = 0)
-
+        super().__init__(name, price, quantity=0)
 
     def __str__(self):
-
         detail = f"{self.name}, Price={self.price}"
         if self.promotion:
             detail += f", Promotion={self.promotion.name}"
         return detail
 
 
-
 class LimitedProduct(Product):
 
-
-    def __init__(self, name, price, quantity,maximum):
-          super().__init__(name,price,quantity)
-          if maximum < 0:
-              raise ValueError ("Maximum quantity cannot be zero")
-          self.maximum = maximum
+    def __init__(self, name, price, quantity, maximum):
+        super().__init__(name, price, quantity)
+        if maximum < 0:
+            raise ValueError("Maximum quantity cannot be zero")
+        self.maximum = maximum
 
     def __str__(self):
         """MacBook Air M2, Price: 1450, Quantity: 100"""
-        detail =f"{self.name}, Price={self.price}, Quantity={self.quantity}, Maximum={self.maximum}"
+        detail = f"{self.name}, Price={self.price}, Quantity={self.quantity}, Maximum={self.maximum}"
         if self.promotion:
             detail += f", Promotion={self.promotion.name}"
         return detail
+
 
 def main():
     bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
@@ -140,8 +131,9 @@ def main():
     print(str(bose))
     str(mac)
 
-    bose.quantity =1000
+    bose.quantity = 1000
     str(bose)
+
 
 if __name__ == "__main__":
     main()
