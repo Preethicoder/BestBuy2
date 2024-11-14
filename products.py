@@ -48,6 +48,7 @@ class Product:
         if value == 0:
             self.deactivate()
 
+
     # Getter and Setter for promotion
     @property
     def promotion(self):
@@ -88,6 +89,7 @@ class Product:
         else:
             total_price = quantity * self.price
         self.quantity = quantity
+
 
         return total_price
 
