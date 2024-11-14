@@ -1,7 +1,4 @@
-from itertools import product
-
 import products
-
 
 class Store:
 
